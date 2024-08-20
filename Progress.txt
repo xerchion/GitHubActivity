@@ -1,0 +1,2 @@
+Ver toda la estructura completa del json
+Pasarla a objetos
