@@ -1,73 +1,57 @@
-import http.client
-import requests
-
 import json
-import sys
-from typing import List
+from collections import Counter
 
-from constants import USER_MSG
+from Api import Api
+from constants import EVENTS_LONG_TEXT
+from EventManager import EventManager
+from models.github import GitHubEvent
+from User_In import User_In
 from View import View
 
 view = View()
 
+# Get name user from args in app call
+user_name = User_In.catch_intro()
 
-def catch_intro() -> List[str]:
-    return sys.argv[1:] if len(sys.argv) > 1 else []
+api = Api(user_name)
 
+# Verifica que la solicitud fue exitosa
+if api.is_conection_ok():
+    # Convierte la respuesta a JSON
+    data = api.extract_data()
 
-def validate_argument():
-    pass
+    # Convertir la respuesta JSON en objetos Pydantic
+    events = [GitHubEvent(**event) for event in data]
+    data = []
+    for event in events:
+        # print(f"Event ID: {event.id}, Type: {event.type}, Repo: {event.repo.name}")
+        data.append({event.type: event.repo.name})
+    print(data)
+    # Contar la frecuencia de cada diccionario
+    dict_counter = Counter(frozenset(item.items()) for item in data)
+    resume_list_events = []  # Mostrar los diccionarios que aparecen más de una vez
+    for dict_key, count in dict_counter.items():
+        if count > 1:
+            resume_list_events.append((dict(dict_key), count))
+    print(resume_list_events)
+    texts = []
+    for element in resume_list_events:
+        # Para extraer la key
+        # desempaqueto la tupla element
+        my_dict, number = element
+        # Extraer la clave del diccionario
+        key = list(my_dict.keys())[0]
 
+        # print("tipo de key", dict_key)
+        # print(key[0])
+        text = EVENTS_LONG_TEXT[key]
+        print
+        repeat = str(element[1])
+        repo = my_dict[key]
+        texts.append(text + " " + str(repeat) + " veces en el repositorio: " + repo)
 
-# user reception
-user_name = catch_intro()[0]
-
-
-# Establece la conexión con GitHub
-conn = http.client.HTTPSConnection("api.github.com")
-
-# Forma la URL dinámica
-url = f"/users/{user_name}/events"
-
-# Define los headers (si estás usando autenticación)
-headers = {
-    "User-Agent": user_name,  # GitHub requiere un User-Agent
-}
-
-# Realiza la solicitud GET a la API
-conn.request("GET", url, headers=headers)
-
-# Obtiene la respuesta
-response = conn.getresponse()
-data = response.read()
-
-# Decodifica los datos
-repo_info = json.loads(data)
-# DEBUGGING
-# print(repo_info)
-# print("typo del reporte", type(repo_info))
-# print("tamaño: ")
-# print(len(repo_info))
-if repo_info == []:
-    view.alert("No hay actividad reciente de ese usuario")
+    # visualizarlo:
+    for text in texts:
+        print(text)
 else:
-    # verificación de si existe el usuario en GitHub
-    # tambien puede hacerse por el campo status == 404
-    if isinstance(repo_info, dict):
-        if repo_info["message"] == "Not Found":
-            view.alert(USER_MSG["USER_DONT_EXISTS"] + user_name)
-        else:
-            print("es un diccionario pero el mensaje NO es NO ENCONTRADO")
-    else:
-        view.info("lo recibido es una lista")
-        print(repo_info)
-
-
-# comprobar si hay actividad reciente
-
-# print(repo_info)
-
-# Cierra la conexión
-
-conn.close()
-conn.close()
+    print(f"Error en la solicitud: {api.get_error()}")

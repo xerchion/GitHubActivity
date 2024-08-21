@@ -47,7 +47,3 @@ event_data = {
     "public": True,
     "created_at": "2024-08-20T10:00:00Z",
 }
-
-event = Event(event_data)
-print(event)
-print(event)

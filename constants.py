@@ -15,3 +15,10 @@ USER_MSG = {
     "NO_VALID_ACTION": "Please provide a valid action.",
 }
 EVENTS = ["CreateEvent", "PushEvent"]
+EVENTS_LONG_TEXT = {
+    "CreateEvent": "Ha creado una rama o etiqueta de Git",
+    "PushEvent": "Ha hecho push",
+    "PullRequestEvent": "Ha realizado solicitudes de extracción",
+    "IssueCommentEvent": "Ha realizado propuesta de cambios o comentarios",
+    "PullRequestReviewEvent": "Revisiones de las solicitudes de extracción"
+}
