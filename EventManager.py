@@ -1,30 +1,66 @@
+from collections import Counter
 from typing import List
 
-from constants import EVENTS
+from constants import EVENTS, EVENTS_LONG_TEXT
 from models.github import GitHubEvent
 
 
 class EventManager:
-    def __init__(self, events: List[GitHubEvent]):
-        self.events = events
 
-    def get_summary(self) -> dict:
-        """
-        Obtiene un resumen de los eventos, como el número total de eventos
-        y el número de eventos por tipo.
+    def __init__(self, data):
+        self.events = self.data_conversion(data)
 
-        :return: Diccionario con el resumen de eventos.
-        """
-        result = {}  # type: ignore
-        for type_event in EVENTS:
-            print(type_event)
-            for event in self.events:
-                if event.type == type_event:
-                    if type_event in result.keys():
-                        counter = result[type_event] + 1
-                        result = {type_event: counter}
+    def data_conversion(self, data):
+        # Convertir la respuesta JSON en objetos Pydantic
+        return [GitHubEvent(**event) for event in data]
 
-        return result
+    def analize_events(self):
+        # extrae una lista con los tipos de evento y su repositorio
+        data = []
+        for event in self.events:
+            # print(f"Event ID: {event.id}, Type: {event.type}, Repo: {event.repo.name}")
+            data.append({event.type: event.repo.name})
+        print(data)
+        return data
+
+    def events_counter_repo(self, data):
+        # Contar la frecuencia de cada diccionario
+        dict_counter = Counter(frozenset(item.items()) for item in data)
+        resume_list_events = []  # Mostrar los diccionarios que aparecen más de una vez
+        for dict_key, count in dict_counter.items():
+            if count > 1:
+                resume_list_events.append((dict(dict_key), count))
+        print(resume_list_events)
+        return resume_list_events
+
+    def generate_output(self, data):
+        texts = []
+        for element in data:
+            key = self.get_key(element)
+            # print("tipo de key", dict_key)
+            # print(key[0])
+            text = EVENTS_LONG_TEXT[key]
+
+            repeat = str(element[1])
+            my_dict = self.get_dict(element)
+            repo = my_dict[key]
+            texts.append(text + " " + str(repeat) + " veces en el repositorio: " + repo)
+        return texts
+
+    # ! separarlo RECUERDA:  PRINCIPIO DE RESPONSABILIDAD UNICA
+    def get_key(self, element):
+        # devuelve la clave de un diccionario dentro de una tupla
+        # Para extraer la key
+        dicctionary = self.get_dict(element)
+        # Extraer la clave del diccionario
+        return list(dicctionary.keys())[0]
+
+    def get_dict(self, element):
+        # desempaqueto la tupla element
+        my_dict, _ = element
+        return my_dict
+
+    # --------------------------------------------------
 
     def analyze_events(self) -> tuple:
         """

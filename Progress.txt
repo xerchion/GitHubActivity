@@ -1,2 +1,4 @@
-Ver toda la estructura completa del json
-Pasarla a objetos
+Añadir mensaje de error si el usuario no existe
+
+crear los tests de main
+
