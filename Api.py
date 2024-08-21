@@ -1,5 +1,5 @@
 import requests
-
+from constants import ERROR_MSGS
 
 class Api:
     def __init__(self, user):
@@ -21,4 +21,4 @@ class Api:
         return self.response.json()
 
     def get_error(self):
-        return self.error
+        return ERROR_MSGS['initial'] + ERROR_MSGS[self.error]

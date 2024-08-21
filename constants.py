@@ -20,5 +20,15 @@ EVENTS_LONG_TEXT = {
     "PushEvent": "Ha hecho push",
     "PullRequestEvent": "Ha realizado solicitudes de extracción",
     "IssueCommentEvent": "Ha realizado propuesta de cambios o comentarios",
-    "PullRequestReviewEvent": "Revisiones de las solicitudes de extracción"
+    "PullRequestReviewEvent": "Revisiones de las solicitudes de extracción",
 }
+
+ERROR_MSGS = {
+    "initial": "Erro en la solicitud:    ",
+    404: "No existe ningún usuario en GitHub con ese nombre.",
+}
+
+COUNTER_TEXT = " veces en el repositorio: "
+
+ACTIVITY_TEXT = "Resumen de la actividad en GitHub/Events de "
+ERROR_IN = "Parámetros no válidos."

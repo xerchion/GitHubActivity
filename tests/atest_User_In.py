@@ -2,7 +2,7 @@ import sys
 
 import pytest  # type: ignore
 
-from User_In import User_In
+from UserInterface import User_In
 
 
 def test_no_params(monkeypatch, capsys):

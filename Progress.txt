@@ -1,4 +1,13 @@
-Añadir mensaje de error si el usuario no existe
 
-crear los tests de main
+CASO DE USO:  El usuario existe pero no tiene actividad
+REFACTORIZA
+COMENTA
+Traducir frases de salida a inglés
+TRADUCIR COMENTARIOS CODIGO
 
+Linea 45 de EventManager:
+    # ! separarlo RECUERDA:  PRINCIPIO DE RESPONSABILIDAD UNICA
+
+AÑADIR MAS EVENTOS A LAS CONSTANTES:
+    -IssuesEvent ME HA SALIDO CON USUARIO JJJ
+    -en gemini tienes la web de github con la explicación de los eventos

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel  # type: ignore
+from pydantic import BaseModel
 
 
 class Actor(BaseModel):

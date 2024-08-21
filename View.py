@@ -19,3 +19,12 @@ class View:
 
     def reset(self):
         print(Fore.RESET)
+
+    def resalt_for_DEBUGGING(self, data):
+        self.alert("-" * 59)
+        print(data)
+        self.alert("-" * 59)
+
+    def header(self, text):
+        print("\n"+Fore.BLUE + text)
+        self.info("_" * 70)

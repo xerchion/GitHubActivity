@@ -1,35 +1,38 @@
-import json
-from collections import Counter
-
 from Api import Api
-from constants import EVENTS_LONG_TEXT
 from EventManager import EventManager
-from models.github import GitHubEvent
-from User_In import User_In
-from View import View
+from UserInterface import User_In
 
-view = View()
+user_interface = User_In()
 
 # Get name user from args in app call
-user_name = User_In.catch_intro()
+user_name = user_interface.catch_intro()
 
 api = Api(user_name)
 
-# Verifica que la solicitud fue exitosa
-if api.is_conection_ok():
+event_manager = ""
 
-    # Crea el gestor de eventos
-    event_manager = EventManager(api.extract_data())
 
-    # encuentra los eventos y su repo
-    analized = event_manager.analize_events()
+def main():
 
-    # cuenta y agrupa los eventos iguales del mismo repo
-    resume_list_events = event_manager.events_counter_repo(analized)
+    # Verifica que la solicitud fue exitosa
+    if api.is_conection_ok():
 
-    output = event_manager.generate_output(resume_list_events)
-    # visualizarlo:
-    for line in output:
-        print(line)
-else:
-    print(f"Error en la solicitud: {api.get_error()}")
+        # Crea el gestor de eventos
+        event_manager = EventManager(api.extract_data())
+
+        # encuentra los eventos y su repo
+        analized = event_manager.analize_events()
+
+        # cuenta y agrupa los eventos iguales del mismo repo
+        resume_list_events = event_manager.events_counter_repo(analized)
+
+        # Genera la salida con comentarios
+        output = event_manager.generate_output(resume_list_events)
+
+        # visualizarlo:
+        user_interface.show(output, user_name)
+    else:
+        user_interface.message(api.get_error())
+
+
+main()
