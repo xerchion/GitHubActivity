@@ -1,6 +1,6 @@
 from models.github import Actor, GitHubEvent, Repo
 
-# FIXTURE: setup  (initialize event_manager)
+# FIXTURE: setup (initialize event_manager)
 API_JSON = [
     {
         "id": "41180088633",
@@ -9,9 +9,7 @@ API_JSON = [
             "id": 15149692,
             "login": "xerchion",
             "display_login": "xerchion",
-            "gravatar_id": "",
             "url": "https://api.github.com/users/xerchion",
-            "avatar_url": "https://avatars.githubusercontent.com/u/15149692?",
         },
         "repo": {
             "id": 845096649,
@@ -21,7 +19,6 @@ API_JSON = [
         "payload": {
             "ref": "main",
             "ref_type": "branch",
-            "master_branch": "main",
             "description": "A command-line tool for managing tasks in a JSON file: add, update, mark, delete, and list tasks by status",
             "pusher_type": "user",
         },
@@ -35,9 +32,7 @@ API_JSON = [
             "id": 15149692,
             "login": "xerchion",
             "display_login": "xerchion",
-            "gravatar_id": "",
             "url": "https://api.github.com/users/xerchion",
-            "avatar_url": "https://avatars.githubusercontent.com/u/15149692?",
         },
         "repo": {
             "id": 845096649,
@@ -47,7 +42,6 @@ API_JSON = [
         "payload": {
             "ref": None,
             "ref_type": "repository",
-            "master_branch": "main",
             "description": "A command-line tool for managing tasks in a JSON file: add, update, mark, delete, and list tasks by status",
             "pusher_type": "user",
         },
@@ -93,14 +87,15 @@ EVENTS_MANAGER = [
 ]
 
 # TEST: test_analize_events
-DICT_EVENT_REPO = [
+EVENT_REPO_DICTIONARIES = [
     {"CreateEvent": "xerchion/TaskTracker"},
     {"CreateEvent": "xerchion/TaskTracker"},
 ]
+
 # TEST: events_counter_repo
-TUPLE_EVENT_REPO_COUNTER = [({"CreateEvent": "xerchion/TaskTracker"}, 2)]
+EVENT_REPO_COUNT_TUPLES = [({"CreateEvent": "xerchion/TaskTracker"}, 2)]
 
 # TEST: generate_output
-OUTPUT_GENERATED = [
-    "Ha creado una rama o etiqueta de Git 2 veces en el repositorio: xerchion/TaskTracker"
+GENERATED_OUTPUT = [
+    "Has created a Git branch or tag 2 times in the repository: xerchion/TaskTracker"
 ]

@@ -1,13 +1,13 @@
 import pytest
 
-from EventManager import EventManager
+from src.EventManager import EventManager
 
 from .constants_tests import (
     API_JSON,
-    DICT_EVENT_REPO,
+    EVENT_REPO_COUNT_TUPLES,
+    EVENT_REPO_DICTIONARIES,
     EVENTS_MANAGER,
-    OUTPUT_GENERATED,
-    TUPLE_EVENT_REPO_COUNTER,
+    GENERATED_OUTPUT,
 )
 
 
@@ -23,20 +23,20 @@ def test_data_conversion(setup):
 
 
 def test_analize_events(setup):
-    expected = DICT_EVENT_REPO
+    expected = EVENT_REPO_DICTIONARIES
     event_manager = setup
     assert expected == event_manager.analize_events()
 
 
 def test_events_counter_repo(setup):
-    expected = TUPLE_EVENT_REPO_COUNTER
+    expected = EVENT_REPO_COUNT_TUPLES
     event_manager = setup
     data = event_manager.analize_events()
     assert expected == event_manager.events_counter_repo(data)
 
 
 def test_generate_output(setup):
-    expected = OUTPUT_GENERATED
+    expected = GENERATED_OUTPUT
     event_manager = setup
     data = event_manager.analize_events()
     data = event_manager.events_counter_repo(data)

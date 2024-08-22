@@ -1,9 +1,10 @@
 from unittest.mock import patch
 
 import pytest
+from pytest import fixture
 from colorama import Fore
 
-from View import View
+from src.View import View
 
 
 @pytest.fixture

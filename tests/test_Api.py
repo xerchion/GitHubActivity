@@ -2,8 +2,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from Api import Api  # Asegúrate de que el nombre del módulo sea correcto
-from constants import ERROR_MSGS
+from src.Api import Api
+from src.constants import ERROR_MESSAGES
 
 
 @pytest.fixture
@@ -33,11 +33,11 @@ def test_is_conection_ok(mock_get, mock_response_200):
     api = Api("testuser")
 
     # Verificar que is_conection_ok es True cuando el código de estado es 200
-    assert api.is_conection_ok() is True
+    assert api.is_connection_ok() is True
 
 
 @patch("requests.get")
-def test_is_conection_not_ok(mock_get, mock_response_404):
+def test_is_conenction_not_ok(mock_get, mock_response_404):
     # Mockear la respuesta de requests.get
     mock_get.return_value = mock_response_404
 
@@ -45,7 +45,7 @@ def test_is_conection_not_ok(mock_get, mock_response_404):
     api = Api("testuser")
 
     # Verificar que is_conection_ok es False cuando el código de estado es 404
-    assert api.is_conection_ok() is False
+    assert api.is_connection_ok() is False
 
 
 @patch("requests.get")
@@ -69,5 +69,5 @@ def test_get_error(mock_get, mock_response_404):
     api = Api("testuser")
 
     # Verificar que get_error devuelve el mensaje de error correcto
-    expected_error = ERROR_MSGS["initial"] + ERROR_MSGS[404]
+    expected_error = ERROR_MESSAGES["initial"] + ERROR_MESSAGES["404"]
     assert api.get_error() == expected_error
