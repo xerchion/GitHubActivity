@@ -40,4 +40,4 @@ GitHub: [Sergio U.B.](https://github.com/xerchion)
 
 ## Project Link
 
-For more details about this project, visit the [Task Tracker Project Roadmap](https://roadmap.sh/projects/task-tracker).
+For more details about this project, visit the [GitHub User Activity](https://roadmap.sh/projects/github-user-activity).
